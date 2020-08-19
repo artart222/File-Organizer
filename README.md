@@ -4,10 +4,10 @@ small program that can organize your files
 ## Usage
 This program organize your files.
 
-This program first takes the number of directories that need to be sorted then take the address of directory need to be sorted and after that take how to sort that directory and organize directory with that way and after that ask address of next directory and do same process <br /> <br /> <br /> <br />
+This program first takes the number of directories that need to be sorted then take the address of directory need to be sorted and after that take how to sort that directory and organize directory with that way and after that ask address of next directory and do same process again and again <br /> <br /> <br /> <br />
 
 
-for example i want to organize my Desktop directory and Downloads directory:
+for example i want to organize my 'Desktop' and 'Downloads' directorys:
 program ask this question and i answer with 2: <br />
 How many directory you want to program organize <br />
 Please enter with number (not letter): 2 <br /> <br />
