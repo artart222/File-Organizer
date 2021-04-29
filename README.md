@@ -9,9 +9,9 @@ This program first takes the number of directories that need to be sorted then t
 
 ## Example of organizing
 
-  For example i want to organize my 'Desktop' directorys. I want to organize 'Desktop' based on files extension
+For example i want to organize my 'Desktop' directorys. I want to organize 'Desktop' based on files extension
 
-  ##### Before organizing
-  ![Before](./Before.png)
-  ##### After organizing
-  ![After](./After.png)
+##### Before organizing
+![Before](./Before.png)
+##### After organizing
+![After](./After.png)
