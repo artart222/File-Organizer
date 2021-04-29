@@ -1,208 +1,133 @@
 import os , shutil , time
 
 
-"""
-With this function i move files
-dirName is name of directory
-that program must make and
-item is the name of file or
-directory program must move
-"""
-def mover(dirName , item):
+def mover(directory_name , item):
     os.chdir(path)
-    """
-    trying to make directory
-    if FileExistsError raise
-    then do nothing
-    (becuse the directory was
-    build before)
-    """
     try:
-        os.mkdir(dirName)
+        os.mkdir(directory_name)
     except FileExistsError:
         pass
-    """
-    trying to move file
-    if shutil.Error raise
-    it means the file with
-    same name is in dirName
-    directory so do things in
-    except block
-    """
+
     try:
-        shutil.move(path + "/" + item , path + "/" + dirName)
+        shutil.move(path + "/" + item , path + "/" + directory_name)
     except shutil.Error:
         print("there is another file named " + item + " " + path)
         print("1) do you want to skip moving " + item + " file")
         print("2) do you want to replace file named " + item + " with " + item)
         print("3) do you want to rename file named " + item)
-        """
-        moveError is variable
-        that has the number
-        user enter for dealing
-        with error
-        """
-        moveError = int(input("Please enter with number: "))
+        move_error = int(input("Please enter with number: "))
         #skiping moving
-        if moveError == 1:
+        if move_error == 1:
             pass
         #replacing file
-        elif moveError == 2:
-            os.remove(path + "/" + dirName + "/" + item)
-            shutil.move(path + "/" + item , path + "/" + dirName)
-        elif moveError == 3:
-            while item in os.listdir(dirName):
+        elif move_error == 2:
+            os.remove(path + "/" + directory_name + "/" + item)
+            shutil.move(path + "/" + item , path + "/" + directory_name)
+        elif move_error == 3:
+            while item in os.listdir(directory_name):
                 pastItem = item
                 item = input("What is new name for file named " + item + ": ")
                 shutil.move(path + "/" + pastItem , path + "/" + item)
-            shutil.move(path + "/" + item , path + "/" + dirName)
+            shutil.move(path + "/" + item , path + "/" + directory_name)
 
 
 
-"""
-moving files based on
-they're first letter
-"""
-def firstLetter(path):
+def first_letter(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
             #find first letter of file
-            dirName = item[0]
-            mover(dirName , item)
+            directory_name = item[0]
+            mover(directory_name , item)
 
 
-"""
-moving file based on
-they're extension
-"""
 def extension(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
             #find extension of file
-            dirName = item.split(".")[-1]
-            mover(dirName , item)
+            directory_name = item.split(".")[-1]
+            mover(directory_name , item)
 
 
-"""
-moving file based on
-they're size
-"""
 def size(path):
-    """
-    ask user how many directory
-    want to program make
-    """
-    howManyDir = int(input("How many directory you want to program build: "))
-    for time in range(howManyDir):
-        """
-        ask user for lowest size
-        and highest size of directory
-        """
-        lowesSize = int(input("What is lowes size of file do you want: "))
-        highestSize = int(input("What is highest size of file do you want: "))
+    how_many_directory = int(input("How many directory you want to program build: "))
+    for time in range(how_many_directory):
+        lowes_size = int(input("What is lowes size of file do you want: "))
+        highest_size = int(input("What is highest size of file do you want: "))
         for item in os.listdir(path):
             if os.path.isfile(path + "/" + item):
                 #find size of file
                 sizeOfFile = os.path.getsize(path + "/" + item)
-                #set this string for dirName variable
-                dirName = ("file beetwen " + str(lowesSize) + " and " + str(highestSize))
-                """
-                check if file is beetwen of these
-                two variable move file to dirName
-                """
-                if lowesSize <= sizeOfFile and highestSize >= sizeOfFile:
-                    mover(dirName , item)
+                #set this string for directory_name variable
+                directory_name = ("file beetwen " + str(lowes_size) + " and " + str(highest_size))
+                if lowes_size <= sizeOfFile and highest_size >= sizeOfFile:
+                    mover(directory_name , item)
 
 
-"""
-moving file based on they're
-different type of date
-"""
 def date(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
-            """
-            ask user for which type of date
-            want for organizing
-            """
             print("1) Do you want to organize your file based on created time")
             print("2) Do you want to organize your file based on modified time")
             print("3) Do you want to organize your file based on accessed time")
-            timeType = int(input("Please enter with number: "))
+            time_type = int(input("Please enter with number: "))
 
-            if timeType == 1:
-                dirName = time.localtime(os.path.getctime(path + "/" + item))
-            elif timeType == 2:
-                dirName = time.localtime(os.path.getmtime(path + "/" + item))
-            elif timeType == 3:
-                dirName = time.localtime(os.path.getatime(path + "/" + item))
-            """
-            ask user for which type of date
-            want based on year , month or day
-            """
+            if time_type == 1:
+                directory_name = time.localtime(os.path.getctime(path + "/" + item))
+            elif time_type == 2:
+                directory_name = time.localtime(os.path.getmtime(path + "/" + item))
+            elif time_type == 3:
+                directory_name = time.localtime(os.path.getatime(path + "/" + item))
             print("1) Do you want to organize your file based on they're year")
             print("2) Do you want to organize your file based on they're month")
             print("3) Do you want to organize your file based on they;re day")
-            dateType = int(input("Please enter with number: "))
+            date_type = int(input("Please enter with number: "))
 
-            if dateType == 1:
-                dirName = dirName[:3]
-            elif dateType == 2:
-                dirName = dirName[:2]
-            elif dateType == 3:
-                dirName = dirName[:1]
-                dirName = str(dirName).replace("," , "")
-            """
-            remove ) and ( beacuse
-            dirName is tuple and i
-            dont want ) and ( in
-            directory name
-            """
-            dirName = str(dirName).replace(")" , "")
-            dirName = str(dirName).replace("(" , "")
-            mover(dirName , item)
+            if date_type == 1:
+                directory_name = directory_name[:3]
+            elif date_type == 2:
+                directory_name = directory_name[:2]
+            elif date_type == 3:
+                directory_name = directory_name[:1]
+                directory_name = str(directory_name).replace("," , "")
+            directory_name = str(directory_name).replace(")" , "")
+            directory_name = str(directory_name).replace("(" , "")
+            mover(directory_name , item)
 
 
 def type(path , type):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
-            #walking on typeOfFile dictionary
-            for type , extensions in typeOfFile.items():
+            #walking on files_type dictionary
+            for type , extensions in files_type.items():
                 for extension in extensions:
-                    """
-                    find extension of file and
-                    check if file extension is
-                    equal to extension set extension
-                    for dirName variable
-                    """
                     if extension == item.split(".")[-1]:
-                        dirName = type
-                        mover(dirName , item)
+                        directory_name = type
+                        mover(directory_name , item)
 
 
-typeOfFile = {
-"Audios" : ["aif" , "cda" , "mid" , "midi" , "mp3" , "mpa" , "ogg" , "wav" , "wma" , "wpl"] ,
-"Compresseds" : ["7z" , "arj" , "deb" , "pkg" , "rar" , "rpm" , "tar" , "gz" , "z" , "zip"] ,
-"Discs and medias" : ["bin" , "dmg" , "iso" , "toast" , "vcd"] ,
-"Datas and databases" : ["csv" , "dat" , "db" , "dbf" , "log" , "mdb" , "sav" , "sql" , "tar" , "xml"] ,
-"E-mails" : ["email" , "eml" , "emlx" , "msg" , "oft" , "ost" , "pst" , "vcf"] ,
-"Executables" : ["apk" , "bat" , "bin" , "cgi" , "pl" , "com" , "exe" , "gadget" , "jar" , "msi" , "wsf"] ,
-"Fonts" : ["fnt" , "fon" , "otf" , "ttf"] ,
-"Images" : ["ai" , "bmp" , "gif" , "ico" , "jpeg" , "jpg" , "png" , "ps" , "psd" , "svg" , "tif" , "tiff"] ,
-"Internet relateds" : ["asp" , "aspx" , "cer" , "cfm" , "cgi" , "pl" , "css" , "htm" , "html" , "js" , "jsp" , "part" , "php" , "rss" , "xhtml"] ,
-"Presentations" : ["key" , "odp" , "pps" , "ppt" , "pptx"] ,
-"Programmings" : ["c" , "cpp" , "class" , "cs" , "h" , "java" , "pl" , "sh" , "swift" , "vb" , "py"] ,
-"Spreadsheets" : ["ods" , "xls" , "xlsm" , "xlsx"] ,
-"System relateds" : ["bak" , "cab" , "cfg" , "cpl" , "cur" , "dll" , "dmp" , "drv" , "icns" , "ico" , "ini" , "ink" , "sys" , "tmp"] ,
-"Videos" : ["3g2" , "3gp" , "avi" , "flv" , "h264" , "m4v" , "mkv" , "mov" , "mp4" , "mpg" , "mpeg" , "rm" , "swf" , "vob" , "wmv"] ,
-"Word processor and texts" : ["doc" , "docx" , "odt" , "pdf" , "rtf" , "tex" , "txt" , "wpd"]
-}
+files_type = {
+    "Audios" : ["aif" , "cda" , "mid" , "midi" , "mp3" , "mpa" , "ogg" , "wav" , "wma" , "wpl"] ,
+    "Compresseds" : ["7z" , "arj" , "deb" , "pkg" , "rar" , "rpm" , "tar" , "gz" , "z" , "zip"] ,
+    "Discs and medias" : ["bin" , "dmg" , "iso" , "toast" , "vcd"] ,
+    "Datas and databases" : ["csv" , "dat" , "db" , "dbf" , "log" , "mdb" , "sav" , "sql" , "tar" , "xml"] ,
+    "E-mails" : ["email" , "eml" , "emlx" , "msg" , "oft" , "ost" , "pst" , "vcf"] ,
+    "Executables" : ["apk" , "bat" , "bin" , "cgi" , "pl" , "com" , "exe" , "gadget" , "jar" , "msi" , "wsf"] ,
+    "Fonts" : ["fnt" , "fon" , "otf" , "ttf"] ,
+    "Images" : ["ai" , "bmp" , "gif" , "ico" , "jpeg" , "jpg" , "png" , "ps" , "psd" , "svg" , "tif" , "tiff"] ,
+    "Internet relateds" : ["asp" , "aspx" , "cer" , "cfm" , "cgi" , "pl" , "css" , "htm" , "html" , "js" , "jsp" , "part" , "php" , "rss" , "xhtml"] ,
+    "Presentations" : ["key" , "odp" , "pps" , "ppt" , "pptx"] ,
+    "Programmings" : ["c" , "cpp" , "class" , "cs" , "h" , "java" , "pl" , "sh" , "swift" , "vb" , "py"] ,
+    "Spreadsheets" : ["ods" , "xls" , "xlsm" , "xlsx"] ,
+    "System relateds" : ["bak" , "cab" , "cfg" , "cpl" , "cur" , "dll" , "dmp" , "drv" , "icns" , "ico" , "ini" , "ink" , "sys" , "tmp"] ,
+    "Videos" : ["3g2" , "3gp" , "avi" , "flv" , "h264" , "m4v" , "mkv" , "mov" , "mp4" , "mpg" , "mpeg" , "rm" , "swf" , "vob" , "wmv"] ,
+    "Word processor and texts" : ["doc" , "docx" , "odt" , "pdf" , "rtf" , "tex" , "txt" , "wpd"]
+    }
 
 
 print("How many directory you want to program organize")
-timeOfProgramRun = int(input("Please enter with number (not letter): "))
+time_of_program_run = int(input("Please enter with number (not letter): "))
 
-for run in range(timeOfProgramRun):
+for run in range(time_of_program_run):
 
     path = input("Which directory you want to organize: ")
 
@@ -211,15 +136,15 @@ for run in range(timeOfProgramRun):
     print("3) organize based on size of files")
     print("4) organize based on date of files")
     print("5) organize based on type of files")
-    howToOrganize = int(input("Please enter with number: "))
+    how_to_organize = int(input("Please enter with number: "))
 
-    if howToOrganize == 1:
-        firstLetter(path)
-    elif howToOrganize == 2:
+    if how_to_organize == 1:
+        first_letter(path)
+    elif how_to_organize == 2:
         extension(path)
-    elif howToOrganize == 3:
+    elif how_to_organize == 3:
         size(path)
-    elif howToOrganize == 4:
+    elif how_to_organize == 4:
         date(path)
-    elif howToOrganize == 5:
+    elif how_to_organize == 5:
         type(path , type)
