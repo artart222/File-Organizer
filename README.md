@@ -15,8 +15,6 @@ For example i want to organize my 'Desktop' directorys. I want to organize 'Desk
 ![Before](./Before.png)
 ##### After organizing
 ![After](./After.png)
-small program that can organize your files
-
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
