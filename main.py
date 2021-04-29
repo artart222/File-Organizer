@@ -11,65 +11,69 @@ def mover(directory_name , item):
     try:
         shutil.move(path + "/" + item , path + "/" + directory_name)
     except shutil.Error:
-        print("there is another file named " + item + " " + path)
+        print("\n\nthere is another file named " + item + " " + path)
         print("1) do you want to skip moving " + item + " file")
         print("2) do you want to replace file named " + item + " with " + item)
         print("3) do you want to rename file named " + item)
-        move_error = int(input("Please enter with number: "))
-        #skiping moving
+        move_error = int(input("\nPlease enter with number: "))
+
+        # Skiping moving
         if move_error == 1:
             pass
-        #replacing file
+
+        # Replacing file
         elif move_error == 2:
             os.remove(path + "/" + directory_name + "/" + item)
             shutil.move(path + "/" + item , path + "/" + directory_name)
+
+        # Renaming file
         elif move_error == 3:
             while item in os.listdir(directory_name):
-                pastItem = item
-                item = input("What is new name for file named " + item + ": ")
-                shutil.move(path + "/" + pastItem , path + "/" + item)
+                old_name = item
+                item = input("\nWhat is new name for file named " + item + ": ")
+
+                shutil.move(path + "/" + old_name , path + "/" + item)
+
             shutil.move(path + "/" + item , path + "/" + directory_name)
-
-
 
 def first_letter(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
-            #find first letter of file
+            # Find first letter of file
             directory_name = item[0]
             mover(directory_name , item)
-
 
 def extension(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
-            #find extension of file
+            # Find extension of file
             directory_name = item.split(".")[-1]
             mover(directory_name , item)
 
-
 def size(path):
-    how_many_directory = int(input("How many directory you want to program build: "))
+    how_many_directory = int(input("\n\nHow many directory you want to program build: "))
+
     for time in range(how_many_directory):
-        lowes_size = int(input("What is lowes size of file do you want: "))
+        lowes_size = int(input("\nWhat is lowes size of file do you want: "))
         highest_size = int(input("What is highest size of file do you want: "))
+
         for item in os.listdir(path):
             if os.path.isfile(path + "/" + item):
-                #find size of file
-                sizeOfFile = os.path.getsize(path + "/" + item)
-                #set this string for directory_name variable
+                # Find size of file
+                size_of_file = os.path.getsize(path + "/" + item)
+                # Set this string for directory_name variable
                 directory_name = ("file beetwen " + str(lowes_size) + " and " + str(highest_size))
-                if lowes_size <= sizeOfFile and highest_size >= sizeOfFile:
+                if lowes_size <= size_of_file and highest_size >= size_of_file:
                     mover(directory_name , item)
 
 
 def date(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
-            print("1) Do you want to organize your file based on created time")
+            print("\n\n1) Do you want to organize your file based on created time")
             print("2) Do you want to organize your file based on modified time")
             print("3) Do you want to organize your file based on accessed time")
-            time_type = int(input("Please enter with number: "))
+            time_type = int(input("\nPlease enter with number: "))
 
             if time_type == 1:
                 directory_name = time.localtime(os.path.getctime(path + "/" + item))
@@ -77,10 +81,11 @@ def date(path):
                 directory_name = time.localtime(os.path.getmtime(path + "/" + item))
             elif time_type == 3:
                 directory_name = time.localtime(os.path.getatime(path + "/" + item))
-            print("1) Do you want to organize your file based on they're year")
+
+            print("\n\n1) Do you want to organize your file based on they're year")
             print("2) Do you want to organize your file based on they're month")
             print("3) Do you want to organize your file based on they;re day")
-            date_type = int(input("Please enter with number: "))
+            date_type = int(input("\nPlease enter with number: "))
 
             if date_type == 1:
                 directory_name = directory_name[:3]
@@ -89,6 +94,7 @@ def date(path):
             elif date_type == 3:
                 directory_name = directory_name[:1]
                 directory_name = str(directory_name).replace("," , "")
+
             directory_name = str(directory_name).replace(")" , "")
             directory_name = str(directory_name).replace("(" , "")
             mover(directory_name , item)
@@ -97,7 +103,7 @@ def date(path):
 def type(path , type):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
-            #walking on files_type dictionary
+            # Walking on files_type dictionary
             for type , extensions in files_type.items():
                 for extension in extensions:
                     if extension == item.split(".")[-1]:
@@ -125,18 +131,18 @@ files_type = {
 
 
 print("How many directory you want to program organize")
-time_of_program_run = int(input("Please enter with number (not letter): "))
+time_of_program_run = int(input("Please enter with number: "))
 
 for run in range(time_of_program_run):
 
-    path = input("Which directory you want to organize: ")
+    path = input("\n\nWhich directory you want to organize: ")
 
-    print("1) organize based on first letter of files")
+    print("\n\n1) organize based on first letter of files")
     print("2) organize based on extension of files")
     print("3) organize based on size of files")
     print("4) organize based on date of files")
     print("5) organize based on type of files")
-    how_to_organize = int(input("Please enter with number: "))
+    how_to_organize = int(input("\nPlease enter with number: "))
 
     if how_to_organize == 1:
         first_letter(path)
