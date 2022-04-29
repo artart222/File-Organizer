@@ -1,7 +1,7 @@
-import os , shutil , time
+import os, shutil, time
 
 
-def mover(directory_name , item):
+def mover(directory_name, item):
     os.chdir(path)
     try:
         os.mkdir(directory_name)
@@ -9,7 +9,7 @@ def mover(directory_name , item):
         pass
 
     try:
-        shutil.move(path + "/" + item , path + "/" + directory_name)
+        shutil.move(path + "/" + item, path + "/" + directory_name)
     except shutil.Error:
         print("\n\nthere is another file named " + item + " " + path)
         print("1) do you want to skip moving " + item + " file")
@@ -24,7 +24,7 @@ def mover(directory_name , item):
         # Replacing file
         elif move_error == 2:
             os.remove(path + "/" + directory_name + "/" + item)
-            shutil.move(path + "/" + item , path + "/" + directory_name)
+            shutil.move(path + "/" + item, path + "/" + directory_name)
 
         # Renaming file
         elif move_error == 3:
@@ -32,26 +32,31 @@ def mover(directory_name , item):
                 old_name = item
                 item = input("\nWhat is new name for file named " + item + ": ")
 
-                shutil.move(path + "/" + old_name , path + "/" + item)
+                shutil.move(path + "/" + old_name, path + "/" + item)
 
-            shutil.move(path + "/" + item , path + "/" + directory_name)
+            shutil.move(path + "/" + item, path + "/" + directory_name)
+
 
 def first_letter(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
             # Find first letter of file
             directory_name = item[0]
-            mover(directory_name , item)
+            mover(directory_name, item)
+
 
 def extension(path):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
             # Find extension of file
             directory_name = item.split(".")[-1]
-            mover(directory_name , item)
+            mover(directory_name, item)
+
 
 def size(path):
-    how_many_directory = int(input("\n\nHow many directory you want to program build: "))
+    how_many_directory = int(
+        input("\n\nHow many directory you want to program build: ")
+    )
 
     for time in range(how_many_directory):
         lowes_size = int(input("\nWhat is lowes size of file do you want: "))
@@ -62,9 +67,11 @@ def size(path):
                 # Find size of file
                 size_of_file = os.path.getsize(path + "/" + item)
                 # Set this string for directory_name variable
-                directory_name = ("file beetwen " + str(lowes_size) + " and " + str(highest_size))
+                directory_name = (
+                    "file beetwen " + str(lowes_size) + " and " + str(highest_size)
+                )
                 if lowes_size <= size_of_file and highest_size >= size_of_file:
-                    mover(directory_name , item)
+                    mover(directory_name, item)
 
 
 def date(path):
@@ -93,41 +100,145 @@ def date(path):
                 directory_name = directory_name[:2]
             elif date_type == 3:
                 directory_name = directory_name[:1]
-                directory_name = str(directory_name).replace("," , "")
+                directory_name = str(directory_name).replace(",", "")
 
-            directory_name = str(directory_name).replace(")" , "")
-            directory_name = str(directory_name).replace("(" , "")
-            mover(directory_name , item)
+            directory_name = str(directory_name).replace(")", "")
+            directory_name = str(directory_name).replace("(", "")
+            mover(directory_name, item)
 
 
-def type(path , type):
+def type(path, type):
     for item in os.listdir(path):
         if os.path.isfile(path + "/" + item):
             # Walking on files_type dictionary
-            for type , extensions in files_type.items():
+            for type, extensions in files_type.items():
                 for extension in extensions:
                     if extension == item.split(".")[-1]:
                         directory_name = type
-                        mover(directory_name , item)
+                        mover(directory_name, item)
 
 
 files_type = {
-    "Audios" : ["aif" , "cda" , "mid" , "midi" , "mp3" , "mpa" , "ogg" , "wav" , "wma" , "wpl"] ,
-    "Compresseds" : ["7z" , "arj" , "deb" , "pkg" , "rar" , "rpm" , "tar" , "gz" , "z" , "zip"] ,
-    "Discs and medias" : ["bin" , "dmg" , "iso" , "toast" , "vcd"] ,
-    "Datas and databases" : ["csv" , "dat" , "db" , "dbf" , "log" , "mdb" , "sav" , "sql" , "tar" , "xml"] ,
-    "E-mails" : ["email" , "eml" , "emlx" , "msg" , "oft" , "ost" , "pst" , "vcf"] ,
-    "Executables" : ["apk" , "bat" , "bin" , "cgi" , "pl" , "com" , "exe" , "gadget" , "jar" , "msi" , "wsf"] ,
-    "Fonts" : ["fnt" , "fon" , "otf" , "ttf"] ,
-    "Images" : ["ai" , "bmp" , "gif" , "ico" , "jpeg" , "jpg" , "png" , "ps" , "psd" , "svg" , "tif" , "tiff"] ,
-    "Internet relateds" : ["asp" , "aspx" , "cer" , "cfm" , "cgi" , "pl" , "css" , "htm" , "html" , "js" , "jsp" , "part" , "php" , "rss" , "xhtml"] ,
-    "Presentations" : ["key" , "odp" , "pps" , "ppt" , "pptx"] ,
-    "Programmings" : ["c" , "cpp" , "class" , "cs" , "h" , "java" , "pl" , "sh" , "swift" , "vb" , "py"] ,
-    "Spreadsheets" : ["ods" , "xls" , "xlsm" , "xlsx"] ,
-    "System relateds" : ["bak" , "cab" , "cfg" , "cpl" , "cur" , "dll" , "dmp" , "drv" , "icns" , "ico" , "ini" , "ink" , "sys" , "tmp"] ,
-    "Videos" : ["3g2" , "3gp" , "avi" , "flv" , "h264" , "m4v" , "mkv" , "mov" , "mp4" , "mpg" , "mpeg" , "rm" , "swf" , "vob" , "wmv"] ,
-    "Word processor and texts" : ["doc" , "docx" , "odt" , "pdf" , "rtf" , "tex" , "txt" , "wpd"]
-    }
+    "Audios": ["aif", "cda", "mid", "midi", "mp3", "mpa", "ogg", "wav", "wma", "wpl"],
+    "Compresseds": ["7z", "arj", "deb", "pkg", "rar", "rpm", "tar", "gz", "z", "zip"],
+    "Discs and medias": ["bin", "dmg", "iso", "toast", "vcd"],
+    "Datas and databases": [
+        "csv",
+        "dat",
+        "db",
+        "dbf",
+        "log",
+        "mdb",
+        "sav",
+        "sql",
+        "tar",
+        "xml",
+    ],
+    "E-mails": ["email", "eml", "emlx", "msg", "oft", "ost", "pst", "vcf"],
+    "Executables": [
+        "apk",
+        "bat",
+        "bin",
+        "cgi",
+        "pl",
+        "com",
+        "exe",
+        "gadget",
+        "jar",
+        "msi",
+        "wsf",
+    ],
+    "Fonts": ["fnt", "fon", "otf", "ttf"],
+    "Images": [
+        "ai",
+        "bmp",
+        "gif",
+        "ico",
+        "jpeg",
+        "jpg",
+        "png",
+        "ps",
+        "psd",
+        "svg",
+        "tif",
+        "tiff",
+    ],
+    "Internet relateds": [
+        "asp",
+        "aspx",
+        "cer",
+        "cfm",
+        "cgi",
+        "pl",
+        "css",
+        "htm",
+        "html",
+        "js",
+        "jsp",
+        "part",
+        "php",
+        "rss",
+        "xhtml",
+    ],
+    "Presentations": ["key", "odp", "pps", "ppt", "pptx"],
+    "Programmings": [
+        "c",
+        "cpp",
+        "class",
+        "cs",
+        "h",
+        "java",
+        "pl",
+        "sh",
+        "swift",
+        "vb",
+        "py",
+    ],
+    "Spreadsheets": ["ods", "xls", "xlsm", "xlsx"],
+    "System relateds": [
+        "bak",
+        "cab",
+        "cfg",
+        "cpl",
+        "cur",
+        "dll",
+        "dmp",
+        "drv",
+        "icns",
+        "ico",
+        "ini",
+        "ink",
+        "sys",
+        "tmp",
+    ],
+    "Videos": [
+        "3g2",
+        "3gp",
+        "avi",
+        "flv",
+        "h264",
+        "m4v",
+        "mkv",
+        "mov",
+        "mp4",
+        "mpg",
+        "mpeg",
+        "rm",
+        "swf",
+        "vob",
+        "wmv",
+    ],
+    "Word processor and texts": [
+        "doc",
+        "docx",
+        "odt",
+        "pdf",
+        "rtf",
+        "tex",
+        "txt",
+        "wpd",
+    ],
+}
 
 
 print("How many directory you want to program organize")
@@ -153,4 +264,4 @@ for run in range(time_of_program_run):
     elif how_to_organize == 4:
         date(path)
     elif how_to_organize == 5:
-        type(path , type)
+        type(path, type)
